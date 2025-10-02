@@ -34,6 +34,9 @@ export default function Page() {
         <section>
           <Dashboard />
         </section>
+        <section>
+          <GenericSettings />
+        </section>
       </main>
     </ClientOnly>
   )

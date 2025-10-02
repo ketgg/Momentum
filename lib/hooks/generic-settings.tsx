@@ -11,15 +11,13 @@ export function GenericSettings() {
     return <div>loading settings...</div>
   }
 
-  console.log("@Settings", settings)
-
   const handleSave = async () => {
     setIsSaving(true)
     try {
       await updateSettings(settings!)
-      console.log("settings saved successfully")
+      // Settings saved successfully
     } catch (error) {
-      console.error("failed to save settings:", error)
+      // Handle save error silently
     } finally {
       setIsSaving(false)
     }
@@ -27,36 +25,39 @@ export function GenericSettings() {
 
   return (
     <div className="w-full max-w-2xl p-4 border rounded-lg">
-      <h2 className="text-lg font-medium mb-4">pipe settings</h2>
+      <h2 className="text-lg font-medium mb-4">Settings</h2>
 
-      {/* Add your settings UI here */}
+      {/* OpenRouter API Key Setting */}
       <div className="space-y-4">
-        {/* Example setting field */}
         <div>
           <label className="block text-sm font-medium mb-1">
-            example setting
+            OpenRouter API Key
           </label>
           <input
-            type="text"
+            type="password"
             className="w-full p-2 border rounded"
-            value={settings?.exampleSetting || ""}
+            value={settings?.openrouterApiKey || ""}
             onChange={(e) =>
               updateSettings({
                 ...settings!,
-                exampleSetting: e.target.value,
+                openrouterApiKey: e.target.value,
               })
             }
+            placeholder="Enter your OpenRouter API key (optional)"
           />
+          <p className="text-xs text-gray-500 mt-1">
+            Providing an OpenRouter API key will add OpenRouter models to the AI preset selector.
+          </p>
         </div>
       </div>
 
       <div className="mt-4">
         <button
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3"
           onClick={handleSave}
           disabled={isSaving}
         >
-          {isSaving ? "saving..." : "save settings"}
+          {isSaving ? "Saving..." : "Save Settings"}
         </button>
       </div>
     </div>
